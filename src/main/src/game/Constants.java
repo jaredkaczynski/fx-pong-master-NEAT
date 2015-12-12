@@ -1,6 +1,4 @@
-package svanimpe.pong;
-
-import static svanimpe.pong.Utilities.degreesToRadians;
+package game;
 
 /*
  * Note: the units used in this class (and by extension the rest of the source code) are pixels
@@ -90,14 +88,14 @@ public class Constants
      * ball is reflected when the ball hits the paddle at this section. The angles given here are
      * for the player paddle. Multiply them by -1 to get the angles for the opponent paddle.
      */
-    public static final double[] PADDLE_SECTION_ANGLES = new double[] {degreesToRadians(-60),
-                                                                       degreesToRadians(-40),
-                                                                       degreesToRadians(-20),
-                                                                       degreesToRadians(0),
-                                                                       degreesToRadians(0),
-                                                                       degreesToRadians(20),
-                                                                       degreesToRadians(40),
-                                                                       degreesToRadians(60)};
+    public static final double[] PADDLE_SECTION_ANGLES = new double[] {Utilities.degreesToRadians(-60),
+                                                                       Utilities.degreesToRadians(-40),
+                                                                       Utilities.degreesToRadians(-20),
+                                                                       Utilities.degreesToRadians(0),
+                                                                       Utilities.degreesToRadians(0),
+                                                                       Utilities.degreesToRadians(20),
+                                                                       Utilities.degreesToRadians(40),
+                                                                       Utilities.degreesToRadians(60)};
     
     /* --- Game --- */
     

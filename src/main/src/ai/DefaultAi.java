@@ -1,11 +1,10 @@
-package svanimpe.pong.ai;
+package ai;
 
-import svanimpe.pong.Game;
-import svanimpe.pong.objects.Paddle;
+import game.Constants;
+import game.Game;
+import objects.Paddle;
 
-import static svanimpe.pong.Constants.*;
-
-public class DefaultAi extends PaddleAi
+public class DefaultAi extends ai.PaddleAi
 {
     /* --- Construction and final properties --- */
     
@@ -46,7 +45,7 @@ public class DefaultAi extends PaddleAi
          * ahead past collisions).
          */
         double targetY = getGame().getBall().getY() + distanceFromPaddle * Math.tan(getGame().getBall().getAngle());
-        boolean paddleOnTarget = targetY >= getPaddle().getY() && targetY + BALL_SIZE <= getPaddle().getY() + PADDLE_HEIGHT;
+        boolean paddleOnTarget = targetY >= getPaddle().getY() && targetY + Constants.BALL_SIZE <= getPaddle().getY() + Constants.PADDLE_HEIGHT;
         if (paddleOnTarget) {
             getPaddle().setMovement(Paddle.Movement.NONE);
         } else if (targetY < getPaddle().getY()) {

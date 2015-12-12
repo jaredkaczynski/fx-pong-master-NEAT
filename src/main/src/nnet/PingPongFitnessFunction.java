@@ -1,4 +1,4 @@
-package svanimpe.pong.nnet;
+package nnet;
 
 /**
  * Created by razrs on 12-Dec-15.
@@ -10,6 +10,7 @@ import com.anji.integration.ActivatorTranscriber;
 import com.anji.util.Configurable;
 import com.anji.util.Properties;
 import com.anji.util.Randomizer;
+import game.Game;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.jgap.BulkFitnessFunction;
@@ -19,22 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-import com.anji.util.Configurable;
-import com.anji.util.Properties;
-import com.anji.util.Randomizer;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Logger;
-import org.jgap.BulkFitnessFunction;
-import org.jgap.Chromosome;
-
-import com.anji.imaging.IdentifyImageFitnessFunction;
-import com.anji.integration.Activator;
-import com.anji.integration.ActivatorTranscriber;
-import svanimpe.pong.Game;
 
 
 /**
@@ -65,11 +50,6 @@ public class PingPongFitnessFunction implements BulkFitnessFunction,Configurable
     private ActivatorTranscriber factory;
 
     private Random rand;
-
-    private void setTrackLength( double aTrackLength ) {
-        trackLength = aTrackLength;
-        trackLengthHalfed = trackLength / 2;
-    }
 
     /**
      * @see com.anji.util.Configurable#init(com.anji.util.Properties)

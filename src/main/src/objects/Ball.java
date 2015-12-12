@@ -1,4 +1,4 @@
-package svanimpe.pong.objects;
+package objects;
 
 public class Ball extends GameObject
 {

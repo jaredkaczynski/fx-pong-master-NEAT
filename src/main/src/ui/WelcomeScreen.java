@@ -1,11 +1,10 @@
-package svanimpe.pong.ui;
+package ui;
 
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-
-import static svanimpe.pong.Constants.*;
+import game.Constants;
 
 public class WelcomeScreen extends Pane
 {
@@ -26,8 +25,8 @@ public class WelcomeScreen extends Pane
              * Therefore, we listen for changes and update the position once the width and height
              * are available.
              */
-            header.setTranslateX((WIDTH - header.getBoundsInLocal().getWidth()) / 2); /* Centered. */
-            header.setTranslateY(TEXT_MARGIN_TOP_BOTTOM);
+            header.setTranslateX((Constants.WIDTH - header.getBoundsInLocal().getWidth()) / 2); /* Centered. */
+            header.setTranslateY(Constants.TEXT_MARGIN_TOP_BOTTOM);
         });
         header.getStyleClass().add("header");
         
@@ -39,12 +38,12 @@ public class WelcomeScreen extends Pane
              * Therefore, we listen for changes and update the position once the width and height
              * are available.
              */
-            info.setTranslateX((WIDTH - info.getBoundsInLocal().getWidth()) / 2); /* Centered. */
-            info.setTranslateY(HEIGHT - TEXT_MARGIN_TOP_BOTTOM - info.getBoundsInLocal().getHeight());
+            info.setTranslateX((Constants.WIDTH - info.getBoundsInLocal().getWidth()) / 2); /* Centered. */
+            info.setTranslateY(Constants.HEIGHT - Constants.TEXT_MARGIN_TOP_BOTTOM - info.getBoundsInLocal().getHeight());
         });
         info.getStyleClass().add("info");
         
-        setPrefSize(WIDTH, HEIGHT);
+        setPrefSize(Constants.WIDTH, Constants.HEIGHT);
         getChildren().addAll(header, info);
         getStyleClass().add("screen");
         

@@ -1,4 +1,4 @@
-package svanimpe.pong.ui;
+package ui;
 
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
@@ -9,9 +9,8 @@ import javafx.scene.text.Font;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Transform;
 import javafx.stage.Stage;
-import svanimpe.pong.Game;
-
-import static svanimpe.pong.Constants.*;
+import game.Constants;
+import game.Game;
 
 public class Pong extends Application
 {    
@@ -20,7 +19,7 @@ public class Pong extends Application
     {
         Font.loadFont(getClass().getResource("/arcade-normal.ttf").toExternalForm(), 0); /* Font family 'Arcade Normal' in CSS. */
         
-        Game game = new Game(WINNING_SCORE);
+        Game game = new Game(Constants.WINNING_SCORE);
         
         Group content = new Group();
         GameScreen gameScreen = new GameScreen(game);
@@ -57,7 +56,7 @@ public class Pong extends Application
          * The content is wrapped in a Group so it can be scaled (the root node itself cannot be
          * scaled as it scales with the scene).
          */
-        Scene scene = new Scene(new Group(content), WIDTH, HEIGHT, Color.BLACK);
+        Scene scene = new Scene(new Group(content), Constants.WIDTH, Constants.HEIGHT, Color.BLACK);
         scene.getStylesheets().add("/styles.css");
         
         Scale scale = Transform.scale(1, 1, 0, 0);
@@ -69,8 +68,8 @@ public class Pong extends Application
          */
         InvalidationListener updateScale = value ->
         {
-            double scaleX = scene.getWidth() / WIDTH;
-            double scaleY = scene.getHeight() / HEIGHT;
+            double scaleX = scene.getWidth() / Constants.WIDTH;
+            double scaleY = scene.getHeight() / Constants.HEIGHT;
 
             if (scaleX < scaleY) {
                 /*
@@ -78,7 +77,7 @@ public class Pong extends Application
                  */
                 scale.setX(scaleX);
                 scale.setY(scaleX);
-                double remainingHeight = scene.getHeight() - HEIGHT * scaleX;
+                double remainingHeight = scene.getHeight() - Constants.HEIGHT * scaleX;
                 content.setTranslateX(0);
                 content.setTranslateY(remainingHeight / 2);
             } else if (scaleY < scaleX) {
@@ -87,7 +86,7 @@ public class Pong extends Application
                  */
                 scale.setX(scaleY);
                 scale.setY(scaleY);
-                double remainingWidth = scene.getWidth() - WIDTH * scaleY;
+                double remainingWidth = scene.getWidth() - Constants.WIDTH * scaleY;
                 content.setTranslateX(remainingWidth / 2);
                 content.setTranslateY(0);
             } else {

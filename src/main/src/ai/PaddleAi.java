@@ -1,7 +1,7 @@
-package svanimpe.pong.ai;
+package ai;
 
-import svanimpe.pong.Game;
-import svanimpe.pong.objects.Paddle;
+import objects.Paddle;
+import game.Game;
 
 public abstract class PaddleAi
 {

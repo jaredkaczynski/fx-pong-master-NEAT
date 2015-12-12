@@ -1,4 +1,4 @@
-package svanimpe.pong;
+package game;
 
 public class Utilities
 {

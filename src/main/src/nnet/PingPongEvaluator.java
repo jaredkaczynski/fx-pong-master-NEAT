@@ -1,4 +1,4 @@
-package svanimpe.pong.nnet;
+package nnet;
 
 /**
  * Created by razrs on 12-Dec-15.

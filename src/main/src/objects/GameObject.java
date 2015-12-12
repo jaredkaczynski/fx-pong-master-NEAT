@@ -1,4 +1,4 @@
-package svanimpe.pong.objects;
+package objects;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

@@ -1,14 +1,12 @@
-package svanimpe.pong;
+package game;
 
 import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.scene.media.AudioClip;
-import svanimpe.pong.ai.DefaultAi;
-import svanimpe.pong.ai.PaddleAi;
-import svanimpe.pong.objects.Ball;
-import svanimpe.pong.objects.Paddle;
-
-import static svanimpe.pong.Constants.*;
+import ai.DefaultAi;
+import ai.PaddleAi;
+import objects.Ball;
+import objects.Paddle;
 
 public class Game
 {
@@ -110,11 +108,11 @@ public class Game
     
     public void start()
     {
-        player.setX(MARGIN_LEFT_RIGHT + GOAL_WIDTH - PADDLE_WIDTH); /* Aligned with the goal area. */
-        player.setY((HEIGHT - PADDLE_HEIGHT) / 2); /* Centered. */
+        player.setX(Constants.MARGIN_LEFT_RIGHT + Constants.GOAL_WIDTH - Constants.PADDLE_WIDTH); /* Aligned with the goal area. */
+        player.setY((Constants.HEIGHT - Constants.PADDLE_HEIGHT) / 2); /* Centered. */
         
-        opponent.setX(WIDTH - MARGIN_LEFT_RIGHT - GOAL_WIDTH); /* Aligned with the goal area. */
-        opponent.setY((HEIGHT - PADDLE_HEIGHT) / 2); /* Centered. */
+        opponent.setX(Constants.WIDTH - Constants.MARGIN_LEFT_RIGHT - Constants.GOAL_WIDTH); /* Aligned with the goal area. */
+        opponent.setY((Constants.HEIGHT - Constants.PADDLE_HEIGHT) / 2); /* Centered. */
         
         player.setScore(0);
         opponent.setScore(0);
@@ -146,7 +144,7 @@ public class Game
     
     /* --- Ball --- */
     
-    private final Ball ball = new Ball(BALL_MAX_SPEED);
+    private final Ball ball = new Ball(Constants.BALL_MAX_SPEED);
 
     public Ball getBall()
     {
@@ -156,17 +154,17 @@ public class Game
     public void launchBall()
     {
         boolean towardsOpponent = random.nextBoolean();
-        double initialAngle = PADDLE_SECTION_ANGLES[random.nextInt(2) + 1]; /* We don't use the steepest angle. */
+        double initialAngle = Constants.PADDLE_SECTION_ANGLES[random.nextInt(2) + 1]; /* We don't use the steepest angle. */
         
-        ball.setSpeed(towardsOpponent ? -BALL_INITIAL_SPEED : BALL_INITIAL_SPEED);
+        ball.setSpeed(towardsOpponent ? -Constants.BALL_INITIAL_SPEED : Constants.BALL_INITIAL_SPEED);
         ball.setAngle(towardsOpponent ? -initialAngle : initialAngle);
-        ball.setX((WIDTH - BALL_SIZE) / 2); /* Centered. */
-        ball.setY(MARGIN_TOP_BOTTOM);
+        ball.setX((Constants.WIDTH - Constants.BALL_SIZE) / 2); /* Centered. */
+        ball.setY(Constants.MARGIN_TOP_BOTTOM);
     }
     
     /* --- Player --- */
     
-    private final Paddle player = new Paddle(PLAYER_PADDLE_SPEED);
+    private final Paddle player = new Paddle(Constants.PLAYER_PADDLE_SPEED);
     
     public Paddle getPlayer()
     {
@@ -175,7 +173,7 @@ public class Game
     
     /* --- Opponent --- */
     
-    private final Paddle opponent = new Paddle(OPPONENT_PADDLE_SPEED);
+    private final Paddle opponent = new Paddle(Constants.OPPONENT_PADDLE_SPEED);
     private final PaddleAi ai = new DefaultAi(opponent, this);
     
     public Paddle getOpponent()
@@ -210,17 +208,17 @@ public class Game
     
     private void keepPaddleInBounds(Paddle paddle)
     {
-        if (paddle.getY() < MARGIN_TOP_BOTTOM) {
-            paddle.setY(MARGIN_TOP_BOTTOM);
-        } else if (paddle.getY() + PADDLE_HEIGHT > HEIGHT - MARGIN_TOP_BOTTOM) {
-            paddle.setY(HEIGHT - MARGIN_TOP_BOTTOM - PADDLE_HEIGHT);
+        if (paddle.getY() < Constants.MARGIN_TOP_BOTTOM) {
+            paddle.setY(Constants.MARGIN_TOP_BOTTOM);
+        } else if (paddle.getY() + Constants.PADDLE_HEIGHT > Constants.HEIGHT - Constants.MARGIN_TOP_BOTTOM) {
+            paddle.setY(Constants.HEIGHT - Constants.MARGIN_TOP_BOTTOM - Constants.PADDLE_HEIGHT);
         }
     }
     
     private void checkWallCollision()
     {
-        boolean ballHitTopWall = ball.getY() < MARGIN_TOP_BOTTOM;
-        boolean ballHitBottomWall = ball.getY() + BALL_SIZE > HEIGHT - MARGIN_TOP_BOTTOM;
+        boolean ballHitTopWall = ball.getY() < Constants.MARGIN_TOP_BOTTOM;
+        boolean ballHitBottomWall = ball.getY() + Constants.BALL_SIZE > Constants.HEIGHT - Constants.MARGIN_TOP_BOTTOM;
         
         if (ballHitTopWall || ballHitBottomWall) {
             ball.setAngle(ball.getAngle() * -1);
@@ -228,9 +226,9 @@ public class Game
         }
         
         if (ballHitTopWall) {
-            ball.setY(MARGIN_TOP_BOTTOM);
+            ball.setY(Constants.MARGIN_TOP_BOTTOM);
         } else if (ballHitBottomWall) {
-            ball.setY(HEIGHT - MARGIN_TOP_BOTTOM - BALL_SIZE);
+            ball.setY(Constants.HEIGHT - Constants.MARGIN_TOP_BOTTOM - Constants.BALL_SIZE);
         }
     }
     
@@ -238,38 +236,38 @@ public class Game
     {
         boolean ballHitEdge;
         if (paddle == player) {
-            ballHitEdge = ball.getX() < MARGIN_LEFT_RIGHT + GOAL_WIDTH;
+            ballHitEdge = ball.getX() < Constants.MARGIN_LEFT_RIGHT + Constants.GOAL_WIDTH;
         } else {
-            ballHitEdge = ball.getX() + BALL_SIZE > WIDTH - MARGIN_LEFT_RIGHT - GOAL_WIDTH;
+            ballHitEdge = ball.getX() + Constants.BALL_SIZE > Constants.WIDTH - Constants.MARGIN_LEFT_RIGHT - Constants.GOAL_WIDTH;
         }
         if (!ballHitEdge) {
             return;
         }
         
-        boolean ballHitPaddle = ball.getY() + BALL_SIZE > paddle.getY() && ball.getY() < paddle.getY() + PADDLE_HEIGHT;
+        boolean ballHitPaddle = ball.getY() + Constants.BALL_SIZE > paddle.getY() && ball.getY() < paddle.getY() + Constants.PADDLE_HEIGHT;
         if (ballHitPaddle) {
             
             /*
              * Find out what section of the paddle was hit.
              */
-            for (int i = 0; i < PADDLE_SECTIONS; i++) {
-                boolean ballHitCurrentSection = ball.getY() < paddle.getY() + (i + 0.5) * PADDLE_SECTION_HEIGHT;
+            for (int i = 0; i < Constants.PADDLE_SECTIONS; i++) {
+                boolean ballHitCurrentSection = ball.getY() < paddle.getY() + (i + 0.5) * Constants.PADDLE_SECTION_HEIGHT;
                 if (ballHitCurrentSection) {
-                    ball.setAngle(PADDLE_SECTION_ANGLES[i] * (paddle == opponent ? -1 : 1));
+                    ball.setAngle(Constants.PADDLE_SECTION_ANGLES[i] * (paddle == opponent ? -1 : 1));
                     break; /* Found our match. */
-                } else if (i == PADDLE_SECTIONS - 1) { /* If we haven't found our match by now, it must be the last section. */
-                    ball.setAngle(PADDLE_SECTION_ANGLES[i] * (paddle == opponent ? -1 : 1));
+                } else if (i == Constants.PADDLE_SECTIONS - 1) { /* If we haven't found our match by now, it must be the last section. */
+                    ball.setAngle(Constants.PADDLE_SECTION_ANGLES[i] * (paddle == opponent ? -1 : 1));
                 }
             }
             
             /*
              * Update and reposition the ball.
              */
-            ball.setSpeed(ball.getSpeed() * BALL_SPEED_INCREASE);
+            ball.setSpeed(ball.getSpeed() * Constants.BALL_SPEED_INCREASE);
             if (paddle == player) {
-                ball.setX(MARGIN_LEFT_RIGHT + GOAL_WIDTH);
+                ball.setX(Constants.MARGIN_LEFT_RIGHT + Constants.GOAL_WIDTH);
             } else {
-                ball.setX(WIDTH - MARGIN_LEFT_RIGHT - GOAL_WIDTH - BALL_SIZE);
+                ball.setX(Constants.WIDTH - Constants.MARGIN_LEFT_RIGHT - Constants.GOAL_WIDTH - Constants.BALL_SIZE);
             }
             new AudioClip(Sounds.HIT_PADDLE).play();
             

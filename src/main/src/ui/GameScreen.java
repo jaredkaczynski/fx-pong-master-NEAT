@@ -1,23 +1,21 @@
-package svanimpe.pong.ui;
+package ui;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import svanimpe.pong.Game;
-import svanimpe.pong.objects.Paddle;
-import svanimpe.pong.objects.Paddle.Movement;
-
-import static svanimpe.pong.Constants.*;
+import game.Constants;
+import game.Game;
+import objects.Paddle;
 
 public class GameScreen extends Pane
 {
     private final Game game;
     
-    private final Rectangle ball = new Rectangle(BALL_SIZE, BALL_SIZE);
-    private final Rectangle player = new Rectangle(PADDLE_WIDTH, PADDLE_HEIGHT);
-    private final Rectangle opponent = new Rectangle(PADDLE_WIDTH, PADDLE_HEIGHT);
+    private final Rectangle ball = new Rectangle(Constants.BALL_SIZE, Constants.BALL_SIZE);
+    private final Rectangle player = new Rectangle(Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT);
+    private final Rectangle opponent = new Rectangle(Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT);
     
     private final Text playerScore = new Text("0");
     private final Text opponentScore = new Text("0");
@@ -46,17 +44,17 @@ public class GameScreen extends Pane
              * Therefore, we listen for changes and update the position once the width and height
              * are available.
              */
-            playerScore.setTranslateX(WIDTH / 2 - SCORE_SPACING / 2 - playerScore.getBoundsInLocal().getWidth());
+            playerScore.setTranslateX(Constants.WIDTH / 2 - Constants.SCORE_SPACING / 2 - playerScore.getBoundsInLocal().getWidth());
         });
-        playerScore.setTranslateY(TEXT_MARGIN_TOP_BOTTOM);
+        playerScore.setTranslateY(Constants.TEXT_MARGIN_TOP_BOTTOM);
         playerScore.getStyleClass().add("score");
         
         opponentScore.textProperty().bind(game.getOpponent().scoreProperty().asString());
-        opponentScore.setTranslateX(WIDTH / 2 + SCORE_SPACING / 2);
-        opponentScore.setTranslateY(TEXT_MARGIN_TOP_BOTTOM);
+        opponentScore.setTranslateX(Constants.WIDTH / 2 + Constants.SCORE_SPACING / 2);
+        opponentScore.setTranslateY(Constants.TEXT_MARGIN_TOP_BOTTOM);
         opponentScore.getStyleClass().add("score");
         
-        setPrefSize(WIDTH, HEIGHT);
+        setPrefSize(Constants.WIDTH, Constants.HEIGHT);
         getChildren().addAll(ball, player, opponent, playerScore, opponentScore);
         getStyleClass().add("screen");
         
@@ -71,18 +69,18 @@ public class GameScreen extends Pane
         } else if (event.getCode() == KeyCode.ESCAPE) {
             game.forfeit();
         } else if (game.getPlayer().getMovement() == Paddle.Movement.NONE && event.getCode() == KeyCode.UP) {
-            game.getPlayer().setMovement(Movement.UP);
-        } else if (game.getPlayer().getMovement() == Movement.NONE && event.getCode() == KeyCode.DOWN) {
-            game.getPlayer().setMovement(Movement.DOWN);
+            game.getPlayer().setMovement(Paddle.Movement.UP);
+        } else if (game.getPlayer().getMovement() == Paddle.Movement.NONE && event.getCode() == KeyCode.DOWN) {
+            game.getPlayer().setMovement(Paddle.Movement.DOWN);
         }
     }
 
     private void keyReleased(KeyEvent event)
     {
-        if (game.getPlayer().getMovement() == Movement.UP && event.getCode() == KeyCode.UP) {
-            game.getPlayer().setMovement(Movement.NONE);
-        } else if (game.getPlayer().getMovement() == Movement.DOWN && event.getCode() == KeyCode.DOWN) {
-            game.getPlayer().setMovement(Movement.NONE);
+        if (game.getPlayer().getMovement() == Paddle.Movement.UP && event.getCode() == KeyCode.UP) {
+            game.getPlayer().setMovement(Paddle.Movement.NONE);
+        } else if (game.getPlayer().getMovement() == Paddle.Movement.DOWN && event.getCode() == KeyCode.DOWN) {
+            game.getPlayer().setMovement(Paddle.Movement.NONE);
         }
     }
 }
