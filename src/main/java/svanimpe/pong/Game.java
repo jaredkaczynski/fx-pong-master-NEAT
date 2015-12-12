@@ -17,6 +17,8 @@ public class Game
     private static final Random random = new Random();
     
     private final int winningScore;
+
+    double distanceFromBall = 0;
     
     public Game(int maxScore)
     {
@@ -64,7 +66,25 @@ public class Game
             previousTime = currentTime;
         }
     }
-    
+
+    /*
+     * This is an implementation of a game loop using variable time steps. See the blog posts on
+     * game loops in JavaFX for more information.
+     */
+        public double[] step(double[] nnetOutput)
+        {
+            /*
+             * If this is the first frame, simply record an initial time.
+             */
+
+            updateGame(.1);
+            double[] nnetInput = {ball.getX(),ball.getY(),player.getY(),ball.getSpeed()};
+            return(nnetInput);
+        }
+
+    public double getfitnessDistance(){
+        return distanceFromBall;
+    }
     private final GameLoop loop = new GameLoop();
     
     /* --- State --- */
@@ -263,6 +283,8 @@ public class Game
                 new AudioClip(Sounds.SCORE_PLAYER).play();
             } else {
                 opponent.setScore(opponent.getScore() + 1);
+                //Add miss point and track distance of miss
+                distanceFromBall = ball.getY()+paddle.getY();
                 new AudioClip(Sounds.SCORE_OPPONENT).play();
             }
             

@@ -19,13 +19,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-package nnet;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import PingPong.*;
 import com.anji.util.Configurable;
 import com.anji.util.Properties;
 import com.anji.util.Randomizer;
@@ -37,6 +34,7 @@ import org.jgap.Chromosome;
 import com.anji.imaging.IdentifyImageFitnessFunction;
 import com.anji.integration.Activator;
 import com.anji.integration.ActivatorTranscriber;
+import svanimpe.pong.Game;
 
 
 /**
@@ -133,28 +131,17 @@ public class PingPongFitnessFunction implements BulkFitnessFunction,Configurable
         //System.out.println("trial");
         // Run the pole-balancing simulation.
         int currentTimestep = 0;
-        Board trial = new Board();
+        Game trial = new Game(10);
         double[] neuralnetworkdataFROMPong = {198,300,175};
-        double[] networkOutput = activator.next(neuralnetworkdataFROMPong);
+        double[] networkOutput;
         //System.out.println(neuralnetworkdataFROMPong);
         while(true) {
-            // Network activation values
 
-            // Activate the network.
-            //neuralnetworkdataFROMPong = trial.screen.step(neuralnetworkdataFROMPong);
-            //System.out.println(activator.getInputDimension()+" This is the dimension");
-            if(trial.getRealTime()) {
-                //System.out.println(neuralnetworkdataFROMPong[0] + " network input" + neuralnetworkdataFROMPong[1] + " ");
-            }
             networkOutput = activator.next(neuralnetworkdataFROMPong);
-            //System.out.println(networkOutput.length);
-            if(trial.getRealTime()) {
-                //System.out.println(networkOutput[0] + " network output" + networkOutput[1]);
-            }
             /*if(networkOutput>0) {
                 System.out.println(networkOutput + " what the network will do");
             }*/
-            neuralnetworkdataFROMPong = trial.screen.step(networkOutput);
+            neuralnetworkdataFROMPong = trial.step(networkOutput);
             /*
             performAction(networkOutput, state);
             if (display != null) {
@@ -163,14 +150,14 @@ public class PingPongFitnessFunction implements BulkFitnessFunction,Configurable
             }
             */
             //SimulateTimestep(network.getOutputSignal(0)>0.5);
-            if(trial.getfinished()){
+            if(trial.getState() == Game.State.ENDED){
                 break;
             }
         }
         fitness = trial.getfitnessDistance();
         if(fitness>2250)
             System.out.println(fitness + " getfitness" +  trial.getfitnessDistance());
-        trial.delete();
+        //trial.delete();
         return fitness;
     }
 
